@@ -85,3 +85,4 @@ IncrementalSoundBankData.xml
 //*.wproj//
 Plugins/Wwise/Source/WwiseSoundEngine/Public/Generated/*
 Plugins/Wwise/Source/WwiseSoundEngine/Public/Generated/**
+*.sln
