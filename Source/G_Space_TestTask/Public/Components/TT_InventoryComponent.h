@@ -38,12 +38,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
 	int32 GetTotalWeight();
+
+	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
+	int32 GetWeightByCategory(EInventoryCategoryType InType);
 	
 protected:
 	
 	void AddCategoryWeight(EInventoryCategoryType InventoryCategory,int32 Weight);
 	void RemoveCategoryWeight(EInventoryCategoryType InventoryCategory,int32 Weight);
 
+	int32 GetFirstItemByName(const FName& InName);
 	
 	TArray<FInventoryItemInfo> Items;
 	TMap<EInventoryCategoryType,int32> CategoryWeight;

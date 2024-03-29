@@ -17,9 +17,10 @@ void UTT_InventoryWD::UpdateInventoryWD_Implementation()
 void UTT_InventoryWD::AddNewItem(const FInventoryItemInfo& InItemInfo)
 {
 	UTT_InventoryCategoryWD* LCategory = GetCategory(InItemInfo.ItemCategory);
-	if(IsValid(LCategory))
+	if(IsValid(LCategory) && IsValid(InventoryComponent))
 	{
-		LCategory->AddNewSlot();
+		LCategory->AddNewSlot(InItemInfo);
+		LCategory->UpdateWeaigt(InventoryComponent->GetWeightByCategory(InItemInfo.ItemCategory));
 	}
 	UpdateInventoryWD();
 }
@@ -27,9 +28,10 @@ void UTT_InventoryWD::AddNewItem(const FInventoryItemInfo& InItemInfo)
 void UTT_InventoryWD::RemoveItem(const FInventoryItemInfo& InItemInfo)
 {
 	UTT_InventoryCategoryWD* LCategory = GetCategory(InItemInfo.ItemCategory);
-	if(IsValid(LCategory))
+	if(IsValid(LCategory) && IsValid(InventoryComponent))
 	{
-		LCategory->AddNewSlot();
+		LCategory->RemoveSlot(InItemInfo);
+		LCategory->UpdateWeaigt(InventoryComponent->GetWeightByCategory(InItemInfo.ItemCategory));
 	}
 	UpdateInventoryWD();
 }
@@ -43,8 +45,8 @@ UTT_InventoryCategoryWD* UTT_InventoryWD::GetCategory(EInventoryCategoryType InC
 	else
 	{
 		UTT_InventoryCategoryWD* LInventorySlot = CreateWidget<UTT_InventoryCategoryWD>(GetOwningPlayer(), InventoryCategoryClass);
-		auto a = CategoriesSettings.Find(InCategoryType);
-		LInventorySlot->InitializeInventoryCategoryWD(InCategoryType,MaxColums,InventorySlotWDClass,*a);
+		const FLinearColor LCategoryColor = *CategoriesSettings.Find(InCategoryType);
+		LInventorySlot->InitializeInventoryCategoryWD(InCategoryType,MaxColums,InventorySlotWDClass,LCategoryColor);
 		const auto LNewCategory = Categories.Add(InCategoryType,LInventorySlot);
 		return LNewCategory;
 	}

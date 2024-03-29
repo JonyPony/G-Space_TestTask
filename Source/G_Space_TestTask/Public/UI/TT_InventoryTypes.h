@@ -41,3 +41,4 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 ItemWeight = 0;
 };
+

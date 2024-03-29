@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "G_Space_TestTaskCharacter.h"
+#include "GameFramework/PlayerController.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -130,8 +131,9 @@ void AG_Space_TestTaskCharacter::OpenInventory()
 				APlayerController* LPlayerController = Cast<APlayerController>(GetController());
 
 				LPlayerController->SetShowMouseCursor(true);
-				const FInputModeGameOnly LNewGameOnlyInput;
-				LPlayerController->SetInputMode(LNewGameOnlyInput);
+				FInputModeUIOnly LNewUIOnlyInput;
+				LNewUIOnlyInput.SetWidgetToFocus(InventoryWD->TakeWidget());
+				LPlayerController->SetInputMode(LNewUIOnlyInput);
 			}
 			
 		}

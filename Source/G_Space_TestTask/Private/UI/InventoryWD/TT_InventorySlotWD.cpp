@@ -2,3 +2,8 @@
 
 
 #include "UI/InventoryWD/TT_InventorySlotWD.h"
+
+void UTT_InventorySlotWD::InitializeInventorySlotWD_Implementation(const FName& InSlotName)
+{
+	SlotName = InSlotName;
+}
