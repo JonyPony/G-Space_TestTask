@@ -1,15 +1,17 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "G_Space_TestTaskCharacter.h"
-#include "G_Space_TestTaskProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/TT_InventoryComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "UI/InventoryWD/TT_InventoryWD.h"
+
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -29,6 +31,10 @@ AG_Space_TestTaskCharacter::AG_Space_TestTaskCharacter()
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-10.f, 0.f, 60.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+
+	// Create a InventoryComponent	
+	InventoryComponent = CreateDefaultSubobject<UTT_InventoryComponent>(TEXT("InventoryComponent"));
+	
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
@@ -104,4 +110,44 @@ void AG_Space_TestTaskCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AG_Space_TestTaskCharacter::OpenInventory()
+{
+	if(IsValid(InventoryWD))
+	{
+		InventoryWD->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		if( !InventoryWDClass.IsNull())
+		{
+			InventoryWD = CreateWidget<UTT_InventoryWD>(GetWorld(), InventoryWDClass.LoadSynchronous());
+			if( IsValid(InventoryWD) )
+			{
+				InventoryWD->InitializeInventoryWD(InventoryComponent);
+				InventoryWD->AddToViewport();
+				APlayerController* LPlayerController = Cast<APlayerController>(GetController());
+
+				LPlayerController->SetShowMouseCursor(true);
+				const FInputModeGameOnly LNewGameOnlyInput;
+				LPlayerController->SetInputMode(LNewGameOnlyInput);
+			}
+			
+		}
+	}
+}
+
+void AG_Space_TestTaskCharacter::CloseInventory()
+{
+	if(IsValid(InventoryWD))
+	{
+		InventoryWD->SetVisibility(ESlateVisibility::Collapsed);
+	}
+
+	APlayerController* LPlayerController = Cast<APlayerController>(GetController());
+
+	LPlayerController->SetShowMouseCursor(false);
+	const FInputModeGameOnly LNewGameOnlyInput;
+	LPlayerController->SetInputMode(LNewGameOnlyInput);
 }

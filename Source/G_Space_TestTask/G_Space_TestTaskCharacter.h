@@ -12,6 +12,10 @@ class USkeletalMeshComponent;
 class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
+
+class UTT_InventoryWD;
+class UTT_InventoryComponent;
+
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -29,6 +33,9 @@ class AG_Space_TestTaskCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+	UTT_InventoryComponent* InventoryComponent = nullptr;
+
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
@@ -42,9 +49,11 @@ class AG_Space_TestTaskCharacter : public ACharacter
 	UInputAction* MoveAction;
 	
 public:
+	
 	AG_Space_TestTaskCharacter();
 
 protected:
+	
 	virtual void BeginPlay();
 
 public:
@@ -57,12 +66,24 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	bool bHasRifle;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = InventoryWD)
+	UTT_InventoryWD* InventoryWD = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widgets")
+	TSoftClassPtr<UTT_InventoryWD> InventoryWDClass;
+	
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void OpenInventory();
+	UFUNCTION(BlueprintCallable)
+	void CloseInventory();
+
 
 protected:
 	// APawn interface
@@ -74,6 +95,6 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
+	
 };
 
