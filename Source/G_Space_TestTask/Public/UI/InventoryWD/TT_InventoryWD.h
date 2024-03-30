@@ -25,9 +25,6 @@ class G_SPACE_TESTTASK_API UTT_InventoryWD : public UUserWidget
 	GENERATED_BODY()
 
 
-
-public:
-	
 protected:
 	
 	UTT_InventoryCategoryWD* GetCategory(EInventoryCategoryType InCategoryType);
@@ -35,10 +32,8 @@ protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
-	//Blueprint public methods
 public:
-
-
+	
 	//..............................................Initializes................................................................//
 
 	/*
@@ -65,15 +60,12 @@ protected:
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryWD")
 	UDataTable* ItemsDataTable = nullptr;
-
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget), Category = "InventoryWD | Widgets")
-	UScrollBox* CategoryScrollBox = nullptr;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<EInventoryCategoryType,FLinearColor> CategoriesSettings;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryWD")
-	int32 MaxColums = 12;
+	int32 MaxColumn = 12;
 
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InventoryWD | Classes")
@@ -81,7 +73,6 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InventoryWD | Classes")
 	TSubclassOf<UTT_InventorySlotWD> InventorySlotWDClass = nullptr;
-
 	
 	UPROPERTY(BlueprintReadOnly) 
 	TMap<EInventoryCategoryType,UTT_InventoryCategoryWD*> Categories;
@@ -91,5 +82,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget), Category = "InventoryWD | Widgets")
 	UTT_CategoryWeightIndicator* WeightIndicator = nullptr;
+	
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget), Category = "InventoryWD | Widgets")
+	UScrollBox* CategoryScrollBox = nullptr;
 	
 };

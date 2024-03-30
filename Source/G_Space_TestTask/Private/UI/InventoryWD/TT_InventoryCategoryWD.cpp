@@ -13,11 +13,11 @@ void UTT_InventoryCategoryWD::InitializeInventoryCategoryWD_Implementation(EInve
 																		   int32 MaxColusm, TSubclassOf<UTT_InventorySlotWD> InInventorySlotWDClass,const FLinearColor& CategoryColor)
 {
 	MyCategory = InInventoryCategory;
-	MaxColums = MaxColusm;
+	MaxColumn = MaxColusm;
 	InventorySlotWDClass = InInventorySlotWDClass;
 }
 
-void UTT_InventoryCategoryWD::UpdateWeaigt_Implementation(int32 InWeight)
+void UTT_InventoryCategoryWD::UpdateWeight_Implementation(float InWeight)
 {
 }
 
@@ -31,16 +31,16 @@ void UTT_InventoryCategoryWD::AddNewSlot(const FInventoryItemInfo& InItemInfo)
 	LInventorySlot->InitializeInventorySlotWD(InItemInfo.ItemName);
 
 	const auto LInventoryGridSlot = InventoryPanel->AddChildToUniformGrid(LInventorySlot);
-	LInventoryGridSlot->SetColumn(CurentColums);
+	LInventoryGridSlot->SetColumn(CurentColumn);
 	LInventoryGridSlot->SetRow(CurrentRow);
 
 	Slots.Add(LInventorySlot);
 	
-	++CurentColums;
+	++CurentColumn;
 
-	if((CurentColums % MaxColums) == 0)
+	if((CurentColumn % MaxColumn) == 0)
 	{
-		CurentColums = 0;
+		CurentColumn = 0;
 		++CurrentRow;
 	}
 }
@@ -57,14 +57,14 @@ void UTT_InventoryCategoryWD::RemoveSlot(const FInventoryItemInfo& InItemInfo)
 			InventoryPanel->RemoveChild(Slots[Index]);
 			Slots.RemoveAtSwap(Index);
 			
-			if(CurentColums > 0)
+			if(CurentColumn > 0)
 			{
-				--CurentColums;
+				--CurentColumn;
 			}
 			else if(CurrentRow > 0)
 			{
 				--CurrentRow;
-				CurentColums = MaxColums - 1;
+				CurentColumn = MaxColumn - 1;
 			}			
 			return;
 		}

@@ -25,7 +25,7 @@ void UTT_InventoryComponent::RemoveItem(const FInventoryItemInfo& InItemInfo)
 	OnInventoryRemoveItem.Broadcast(InItemInfo);
 }
 
-void UTT_InventoryComponent::AddCategoryWeight(EInventoryCategoryType InventoryCategory, int32 Weight)
+void UTT_InventoryComponent::AddCategoryWeight(EInventoryCategoryType InventoryCategory, float Weight)
 {
 	
 	if(	CategoryWeight.Contains(InventoryCategory))
@@ -38,7 +38,7 @@ void UTT_InventoryComponent::AddCategoryWeight(EInventoryCategoryType InventoryC
 	}
 }
 
-void UTT_InventoryComponent::RemoveCategoryWeight(EInventoryCategoryType InventoryCategory, int32 Weight)
+void UTT_InventoryComponent::RemoveCategoryWeight(EInventoryCategoryType InventoryCategory, float Weight)
 {
 	if(	CategoryWeight.Contains(InventoryCategory))
 	{
@@ -58,13 +58,13 @@ int32 UTT_InventoryComponent::GetFirstItemByName(const FName& InName)
 	return -1;
 }
 
-int32 UTT_InventoryComponent::GetTotalWeight()
+float UTT_InventoryComponent::GetTotalWeight()
 {
 	return TotalWeight;
 }
 
-int32 UTT_InventoryComponent::GetWeightByCategory(EInventoryCategoryType InType)
+float UTT_InventoryComponent::GetWeightByCategory(EInventoryCategoryType InType)
 {
-	if(!CategoryWeight.Contains(InType)) return 0;
+	if(!CategoryWeight.Contains(InType)) return 0.f;
 	return CategoryWeight[InType];
 }

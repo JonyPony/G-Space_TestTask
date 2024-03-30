@@ -29,27 +29,25 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
 	void RemoveItem(const FInventoryItemInfo& InItemInfo);
-
 	
 	UPROPERTY(BlueprintAssignable, Category = "InventorySystem|EventsForBind")
 	FOnInventoryRemoveItem OnInventoryRemoveItem;
 	
-
+	
+	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
+	float GetTotalWeight();
 
 	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
-	int32 GetTotalWeight();
-
-	UFUNCTION(BlueprintCallable, Category = "InventoryWD")
-	int32 GetWeightByCategory(EInventoryCategoryType InType);
+	float GetWeightByCategory(EInventoryCategoryType InType);
 	
 protected:
 	
-	void AddCategoryWeight(EInventoryCategoryType InventoryCategory,int32 Weight);
-	void RemoveCategoryWeight(EInventoryCategoryType InventoryCategory,int32 Weight);
+	void AddCategoryWeight(EInventoryCategoryType InventoryCategory,float Weight);
+	void RemoveCategoryWeight(EInventoryCategoryType InventoryCategory,float Weight);
 
 	int32 GetFirstItemByName(const FName& InName);
 	
 	TArray<FInventoryItemInfo> Items;
-	TMap<EInventoryCategoryType,int32> CategoryWeight;
-	int32 TotalWeight = 0;
+	TMap<EInventoryCategoryType,float> CategoryWeight;
+	float TotalWeight = 0;
 };

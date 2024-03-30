@@ -85,7 +85,7 @@ UTT_InventoryCategoryWD* UTT_InventoryWD::GetCategory(EInventoryCategoryType InC
 	{
 		UTT_InventoryCategoryWD* LInventorySlot = CreateWidget<UTT_InventoryCategoryWD>(GetOwningPlayer(), InventoryCategoryClass);
 		const FLinearColor LCategoryColor = *CategoriesSettings.Find(InCategoryType);
-		LInventorySlot->InitializeInventoryCategoryWD(InCategoryType,MaxColums,InventorySlotWDClass,LCategoryColor);
+		LInventorySlot->InitializeInventoryCategoryWD(InCategoryType,MaxColumn,InventorySlotWDClass,LCategoryColor);
 		const auto LNewCategory = Categories.Add(InCategoryType,LInventorySlot);
 		return LNewCategory;
 	}

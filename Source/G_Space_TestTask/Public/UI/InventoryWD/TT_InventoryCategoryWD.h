@@ -11,21 +11,6 @@
 class UUniformGridPanel;
 class UTT_InventorySlotWD;
 
-
-USTRUCT(BlueprintType)
-struct FInventoryCategorySlot 
-{
-	GENERATED_USTRUCT_BODY()
-
-public:
-	
-	UPROPERTY(BlueprintReadOnly)
-	FName ItemName = NAME_None;
-	
-	UPROPERTY(BlueprintReadOnly)
-	UWidget* InventorySlot = nullptr;
-};
-
 /*
 	Widget for displaying items within a category
 */
@@ -44,15 +29,15 @@ public:
 	void InitializeInventoryCategoryWD_Implementation(EInventoryCategoryType InInventoryCategory,int32 MaxColusm,TSubclassOf<UTT_InventorySlotWD> InInventorySlotWDClass,const FLinearColor& CategoryColor);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "InventoryWD")
-	void UpdateWeaigt(int32 InWeight);
-	void UpdateWeaigt_Implementation(int32 InWeight);
+	void UpdateWeight(float InWeight);
+	void UpdateWeight_Implementation(float InWeight);
 
 protected:
 	
 	EInventoryCategoryType MyCategory = EInventoryCategoryType::None;
 	
-	int32 MaxColums = 12;
-	int32 CurentColums = 0;
+	int32 MaxColumn = 12;
+	int32 CurentColumn = 0;
 	int32 CurrentRow = 0;
 
 	TArray<UTT_InventorySlotWD*> Slots;
