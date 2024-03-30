@@ -9,6 +9,8 @@
 #include "TT_InventoryWD.generated.h"
 
 class UScrollBox;
+
+class UTT_CategoryWeightIndicator;
 class UTT_InventoryCategoryWD;
 class UTT_InventorySlotWD;
 
@@ -86,5 +88,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	UTT_InventoryComponent* InventoryComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget), Category = "InventoryWD | Widgets")
+	UTT_CategoryWeightIndicator* WeightIndicator = nullptr;
 	
 };
